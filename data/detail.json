@@ -1,0 +1,50 @@
+
+{
+    "Code": "TrafficFlowStat",
+    "FlowStates": [
+        {
+            "AverageSpeed": 21.71929740905762,
+            "DetailInfo": {
+                "AverageSpeed": 21.71929740905762,
+                "BackOfQueue": 0.0,
+                "Direction": [
+                    "Straight"
+                ],
+                "DrivingDirection": null,
+                "FinalVehicleDist": 23.0,
+                "FlowRate": 1440,
+                "HumanFlag": 0,
+                "JamState": "Slowed",
+                "Lane": 1,
+                "LargeVehicles": 0,
+                "LongVehicles": 0,
+                "MachineAddress": null,
+                "MachineName": "AE011DCPAJD8AC0",
+                "MediumVehicles": 0,
+                "MotoVehicles": 0,
+                "Period": 0,
+                "PeriodByMili": 5000,
+                "SmallVehicles": 2,
+                "SpaceHeadway": 12.06627633836534,
+                "SpaceOccupyRatio": 58.0,
+                "TimeHeadway": 2.0,
+                "TimeOccupyRatio": 88.19999694824219,
+                "UTC": 1727268505,
+                "UTCMS": 13,
+                "VehicleFlag": 1,
+                "VehicleTypeFlow": {
+                    "SaloonCarVehicles": 2
+                },
+                "Vehicles": 2,
+                "Volume": 2
+            },
+            "DrivingDirection": null,
+            "Flow": 2,
+            "JamState": "Slowed",
+            "Lane": 1,
+            "Period": 0,
+            "PeriodByMili": 5000,
+            "State": 3
+        }
+    ]
+}

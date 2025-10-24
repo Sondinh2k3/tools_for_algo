@@ -1,0 +1,50 @@
+
+{
+    "Code": "TrafficFlowStat", //The name of the event
+    "FlowStates": [ //Flow States, a one-dimensional array, each element representing a lane
+        {
+            "AverageSpeed": 21.71929740905762, //Average speed, in km/h
+            "DetailInfo": { //Traffic details. }
+                "AverageSpeed": 21.71929740905762, //Average speed, in km/h
+                "BackOfQueue": 0.0, //Queue length, instantaneous value, length from the first stationary vehicle to the last stationary vehicle in the corresponding lane (meters)
+                "Direction": [
+                    "Straight"
+                ], //Lane direction of travel Enumchar[16]{"Straight": Go straight "TurnLeft": Left "TurnRight": Turn right "U-Turn": Turn}
+                "DrivingDirection": null, //Direction of travel"Approach"-Uplink，That is, the vehicle is getting closer and closer to the point where the equipment is deployed；"Leave"-Downlink，That is, the vehicle is getting farther and farther away from the point where the equipment is deployed
+                "FinalVehicleDist": 23.0, //The distance of the last vehicle from the stop line, in meters
+                "FlowRate": 1440, //trolley equivalent
+                "HumanFlag": 0, //Indicates whether there is pedestrian traffic statistics in this recordEnumint{0: Does not include pedestrian traffic1: Includes pedestrian traffic}
+                "JamState": "Slowed", //Road congestion(Customized needs，This field is not used when it is availableState)Enumchar[16]{"Clear": Unobstructed"Slowed": Amble"Jammed": Congestion}
+                "Lane": 1, //Lane number
+                "LargeVehicles": 0, //Large vehicle traffic volume (units/unit time)
+                "LongVehicles": 0,
+                "MachineAddress": null, //Location code
+                "MachineName": "AE011DCPAJD8AC0", //Device number
+                "MediumVehicles": 0, //Medium-sized vehicle traffic (units/unit time)
+                "MotoVehicles": 0, //Traffic volume of non-motorized vehicles such as motorcycles and three-wheelers (units/unit time)
+                "Period": 0, //Statistical period, in minutes
+                "PeriodByMili": 5000, //The part of the statistical period within minutes, in milliseconds, can be used in the range of 0, 60000, and is used in conjunction with Period 
+                "SmallVehicles": 2, //Trolley traffic (units/unit time)
+                "SpaceHeadway": 12.06627633836534, //distance between adjacent vehicles, in meters per vehicle
+                "SpaceOccupyRatio": 58.0, //which is the sum of vehicle lengths as a percentage divided by the average distance traveled by vehicles in time intervals.
+                "TimeHeadway": 2.0, //The time distance between the front of the vehicle, in seconds per car
+                "TimeOccupyRatio": 88.19999694824219, //which is the proportion of the total time spent by vehicles passing through the section per unit of time per unit of time
+                "UTC": 1727268505, //End time of the financial period (local UTC time)
+                "UTCMS": 13, //Millisecond value
+                "VehicleFlag": 1, //Indicates whether there is traffic statistics in this recordEnumint{0: Excluding traffic 1: Including traffic volume}
+                "VehicleTypeFlow": { //Count traffic by vehicle type
+                    "SaloonCarVehicles": 2 //Sedan traffic volume (units/unit time)
+                },
+                "Vehicles": 2, //Total number of motorized and non-motorized vehicles (units/unit time)
+                "Volume": 2 //Traffic volume (units/unit time) The equivalent number of vehicles passing through a point on a lane, road or other passage at a certain time interval, usually measured in 1 hour
+            },
+            "DrivingDirection": null, //Direction of travel"Approach"-Uplink，That is, the vehicle is getting closer and closer to the point where the equipment is deployed；"Leave"-Downlink，That is, the vehicle is getting farther and farther away from the point where the equipment is deployed
+            "Flow": 2,
+            "JamState": "Slowed", //Road congestion(Customized needs，This field is not used when it is availableState)Enumchar[16]{"Clear": Unobstructed"Slowed": Amble"Jammed": Congestion}
+            "Lane": 1, //Lane number
+            "Period": 0, //Statistical period, in minutes
+            "PeriodByMili": 5000, //The part of the statistical period within the minute, in milliseconds, in the range of 0, 60000, is used in conjunction with Period
+            "State": 3 //Traffic status Enumint{1: Traffic too large (congested)2: Traffic too heavy Recovery (Slightly congested)3: Normal 4: Traffic too low (unobstructed)5: Low traffic Recovery (Good)}
+        }
+    ]
+}
