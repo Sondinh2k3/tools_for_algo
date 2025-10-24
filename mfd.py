@@ -13,41 +13,64 @@ def calculate_accumulation(occupancy, lane_length, num_lanes):
 
 def process_mfd_data(data_by_timestamp, lane_length, num_lanes_map):
     """
-    Xử lý dữ liệu thô để tạo ra các điểm dữ liệu cho MFD.
+    Xử lý và tổng hợp dữ liệu thô để tạo ra các điểm dữ liệu cho MFD
+    theo chu kỳ 50 giây.
     """
     mfd_data_points = []
-    for timestamp, records in data_by_timestamp.items():
+    
+    # Sắp xếp các timestamp để đảm bảo xử lý theo thứ tự thời gian
+    sorted_timestamps = sorted(data_by_timestamp.keys())
+    
+    # Lặp qua các timestamp theo từng khối 5 (5 * 10s = 50s)
+    for i in range(0, len(sorted_timestamps), 5):
+        chunk_timestamps = sorted_timestamps[i:i+5]
         
-        # Nhóm các bản ghi theo detector_id
-        records_by_detector = defaultdict(list)
-        for record in records:
-            records_by_detector[record.get('detector_id')].append(record)
+        # Chỉ xử lý nếu có đủ 5 timestamp trong khối
+        if len(chunk_timestamps) < 5:
+            continue
 
-        total_flow_at_ts = 0
-        total_accumulation_at_ts = 0
+        window_accumulations = []
+        window_flows = []
 
-        # Xử lý từng detector tại timestamp này
-        for detector_id, detector_records in records_by_detector.items():
-            if not detector_records:
-                continue
-
-            # Tính toán các giá trị trung bình cho detector này
-            avg_occupancy = sum(rec['space_occupy_ratio'] for rec in detector_records) / len(detector_records)
-            total_flow_for_detector = sum(rec['flow'] for rec in detector_records)
+        # Xử lý từng timestamp trong khối 50s
+        for timestamp in chunk_timestamps:
+            records = data_by_timestamp[timestamp]
             
-            num_lanes_for_detector = num_lanes_map.get(detector_id, 1)
+            records_by_detector = defaultdict(list)
+            for record in records:
+                records_by_detector[record.get('detector_id')].append(record)
 
-            # Tính toán tích lũy cho toàn bộ detector
-            accumulation_for_detector = calculate_accumulation(
-                avg_occupancy,
-                lane_length,
-                num_lanes_for_detector
-            )
+            total_flow_at_ts = 0
+            total_accumulation_at_ts = 0
 
-            total_flow_at_ts += total_flow_for_detector
-            total_accumulation_at_ts += accumulation_for_detector
+            for detector_id, detector_records in records_by_detector.items():
+                if not detector_records:
+                    continue
 
-        mfd_data_points.append((total_accumulation_at_ts, total_flow_at_ts))
+                avg_occupancy = sum(rec['space_occupy_ratio'] for rec in detector_records) / len(detector_records)
+                total_flow_for_detector = sum(rec['flow'] for rec in detector_records)
+                num_lanes_for_detector = num_lanes_map.get(detector_id, 1)
+
+                accumulation_for_detector = calculate_accumulation(
+                    avg_occupancy,
+                    lane_length,
+                    num_lanes_for_detector
+                )
+
+                total_flow_at_ts += total_flow_for_detector
+                total_accumulation_at_ts += accumulation_for_detector
+            
+            window_accumulations.append(total_accumulation_at_ts)
+            window_flows.append(total_flow_at_ts)
+
+        # Tổng hợp kết quả cho cửa sổ 50s
+        # Tích lũy là trung bình cộng
+        final_accumulation = sum(window_accumulations) / len(window_accumulations)
+        # Lưu lượng là trung bình cộng (để giữ đúng đơn vị vehicles/hour)
+        final_flow = sum(window_flows) / len(window_flows)
+        
+        mfd_data_points.append((final_accumulation, final_flow))
+        
     return mfd_data_points
 
 def find_mfd_setpoint(mfd_data):
